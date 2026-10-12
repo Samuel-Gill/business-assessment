@@ -1,12 +1,12 @@
+import {appConfig} from './branding';
 const env = import.meta.env;
 export const consultant = {
-  firmName: env.VITE_FIRM_NAME?.trim() || 'Business Health 360',
+  firmName: env.VITE_FIRM_NAME?.trim() || appConfig.appName,
   name: env.VITE_CONSULTANT_NAME?.trim() || 'Business Health Advisory',
   email: env.VITE_CONSULTANT_EMAIL?.trim() || '',
   phone: env.VITE_CONSULTANT_PHONE?.trim() || '',
   website: env.VITE_CONSULTANT_WEBSITE?.trim() || '',
   bookingUrl: env.VITE_BOOKING_URL?.trim() || '',
-  logo: '',
   colors: {navy:'#14213D',blue:'#2563EB',gold:'#D4A94E'},
   welcome: 'Clarity today. A stronger business tomorrow.',
   disclaimer: 'This report is based on information self-reported by the organization and is intended for preliminary business assessment and consulting discussions. It does not constitute a financial audit, legal opinion, cybersecurity certification, or guarantee of business performance.',

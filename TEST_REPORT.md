@@ -47,3 +47,7 @@ A fresh start while the profile form was mounted initially retained React Hook F
 ## Before client use
 
 Configure the consultant branding and contact/booking details, set EmailJS public build values, fix the template recipient, add approved domains and appropriate spam protections, and rebuild. Perform an end-to-end submission using fictional business data on the intended production domain. Check complete response content, delivery scope, inbox receipt, reply-to, mobile viewports, and browser PDF download.
+
+## Central branding update — October 12, 2026
+
+40 automated tests pass across six files after centralizing branding in `app.config.ts`. Additional checks verify header/footer naming, every page title, PDF filenames, email branding, PNG signatures/dimensions, generated thumbnail changes when the app name changes, override image paths, and invalid logo-path rejection. Production HTML contains the configured name, favicon, Apple icon, Open Graph metadata, and Twitter thumbnail metadata before JavaScript runs. Generated thumbnail and branded PDF cover were visually inspected. The logo is embedded in the PDF, and cache-busting image URLs change when asset bytes change. Browser/mobile and actual external social preview delivery remain unverified.

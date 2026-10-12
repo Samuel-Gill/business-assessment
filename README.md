@@ -35,7 +35,28 @@ Required for sending:
 
 Optional branding/contact values include consultant name, firm name, phone, website, and booking URL. Booking URLs accept only HTTP(S); otherwise a configured consultant email becomes the consultation link. Without either, the app explains that contact details await configuration rather than opening a broken link.
 
-Change brand colors, logo path, welcome copy, disclaimer, and score configuration in `src/config/consultant.ts`. The CSS uses navy, blue, and gold custom properties initialized from the configuration. Category-specific colors are in `src/data/categories.ts`. Set `logo` to the path of an approved local asset in `public/` to use it in the header; the default is a Lucide brand mark.
+### Central app name, logo, favicon, and thumbnail
+
+Edit **`app.config.ts`** at the project root:
+
+```ts
+appName: 'Your App Name',
+appLogo: '/your-logo.png',
+appFavicon: '',
+appThumbnail: '',
+```
+
+Put the logo file in `public/` (for example `public/your-logo.png`). Supported formats: SVG, PNG, JPG, and WebP. Logo paths must be local public paths, not remote URLs. Use a self-contained SVG without external resources.
+
+The same `appName` and `appLogo` are used in the header, home button's accessible label, footer, landing illustration, browser titles, initial HTML metadata, PDF cover/footer/document title/filename, and consultant email branding. PDF export includes the logo. Scoring data and existing draft storage keys are independent of branding, so changing the name does not reset pending progress.
+
+Leave `appFavicon` and `appThumbnail` empty to **automatically generate** a square PNG favicon and a 1200×630 PNG sharing thumbnail from the central name and logo. A PNG version of the logo is also generated for PDF reports and Apple touch icons. To override either image, add it to `public/` and set its path here. Prefer square PNG/ICO/SVG favicons and a 1200×630 PNG/JPG social thumbnail. All image URLs include content hashes to avoid stale branding caches.
+
+`appUrl` supplies the deployed origin for absolute social and email image URLs; update it when moving to Vercel, Netlify, or another host. `tagline`, `description`, and `themeColor` are also centralized. Open Graph and Twitter tags are written into the **built HTML**, so they do not depend on a crawler running JavaScript. Private Sites may require public hosting/sharing before external social crawlers can access the page. Social platforms may keep their own cached previews until refreshed.
+
+After any branding change, restart the dev server or run `npm run build` and redeploy. No manual edits to `index.html` or report components are needed. `@resvg/resvg-js` is a build-only dependency for generating PNGs; it is not shipped as application JavaScript.
+
+Consultant/company details remain in `.env.local` and `src/config/consultant.ts`. `VITE_FIRM_NAME` identifies the consulting firm when intentionally separate from the app; it is not the app-name control. Brand colors, welcome copy, disclaimer, and score configuration remain in `src/config/consultant.ts`. Category colors are in `src/data/categories.ts`.
 
 ## EmailJS setup
 
