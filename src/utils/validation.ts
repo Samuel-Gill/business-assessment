@@ -1,0 +1,7 @@
+import {z} from 'zod';
+import {industries,sizes} from '../data/categories';
+import type {BusinessProfile} from '../types/assessment';
+const single=(limit=120)=>z.string().trim().max(limit,'Please shorten this response.').refine(s=>!/[\r\n\x00-\x1f]/.test(s),'Use a single line of text.');
+const required=()=>single().min(2,'Please enter at least 2 characters.');
+export const profileSchema=z.object({organization:required(),contact:required(),title:required(),email:single(254).pipe(z.email('Enter a valid email address.')),industry:z.string().refine(s=>industries.includes(s),'Select an industry.'),size:z.string().refine(s=>sizes.includes(s),'Select organization size.'),years:z.string().refine(s=>s!==''&&Number.isFinite(Number(s))&&Number(s)>=0&&Number(s)<=300,'Enter years in operation (0–300).'),phone:single(40),website:single(200).refine(v=>!v||/^https?:\/\//.test(v)&&URL.canParse(v),'Use an http:// or https:// website address.'),location:single(),revenue:single(),locations:z.string().refine(s=>!s||Number.isInteger(Number(s))&&Number(s)>0&&Number(s)<=100000,'Enter a positive whole number.'),goals:z.string().trim().max(1000),challenge:z.string().trim().max(1000),consent:z.boolean().refine(v=>v,'Consent is required to continue.')});
+export const blankProfile:BusinessProfile={organization:'',contact:'',title:'',email:'',industry:'',size:'',years:'',phone:'',website:'',location:'',revenue:'',locations:'',goals:'',challenge:'',consent:false};
